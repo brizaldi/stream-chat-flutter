@@ -99,6 +99,12 @@ class MessageWidget extends StatefulWidget {
 
   final List<Read> readList;
 
+  /// customize on sent indicator
+  final Widget deliveredIndicatorBuilder;
+
+  /// customize pending indicator
+  final Widget pendingIndicatorBuilder;
+
   /// If true show the users username next to the timestamp of the message
   final bool showUsername;
   final bool showTimestamp;
@@ -136,6 +142,8 @@ class MessageWidget extends StatefulWidget {
     this.padding,
     this.textPadding = const EdgeInsets.all(8.0),
     this.attachmentPadding = EdgeInsets.zero,
+    this.pendingIndicatorBuilder,
+    this.deliveredIndicatorBuilder,
   })  : attachmentBuilders = {
           'image': (context, message, attachment) {
             return ImageAttachment(
@@ -633,6 +641,8 @@ class _MessageWidgetState extends State<MessageWidget> {
         alignment: Alignment.center,
         child: SendingIndicator(
           message: widget.message,
+          deliveredIndicatorBuilder: widget.deliveredIndicatorBuilder,
+          pendingIndicatorBuilder: widget.pendingIndicatorBuilder,
         ),
       ),
     );

@@ -93,6 +93,8 @@ class MessageInput extends StatefulWidget {
     this.actions,
     this.actionsLocation = ActionsLocation.left,
     this.attachmentThumbnailBuilders,
+    this.sendIcon,
+    this.messageInputDecoration,
   }) : super(key: key);
 
   /// Message to edit
@@ -137,6 +139,12 @@ class MessageInput extends StatefulWidget {
 
   /// Map that defines a thumbnail builder for an attachment type
   final Map<String, AttachmentThumbnailBuilder> attachmentThumbnailBuilders;
+
+  /// Customize send button icon
+  final Icon sendIcon;
+
+  /// Customize message input textField decoration
+  final InputDecoration messageInputDecoration;
 
   @override
   MessageInputState createState() => MessageInputState();
@@ -207,7 +215,8 @@ class MessageInputState extends State<MessageInput> {
         if (widget.actionsLocation == ActionsLocation.left)
           ...widget.actions ?? [],
         _buildTextInput(context),
-        _animateSendButton(context),
+        _buildSendButton(context),
+//        _animateSendButton(context),
         if (widget.actionsLocation == ActionsLocation.right)
           ...widget.actions ?? [],
       ],
@@ -277,7 +286,7 @@ class MessageInputState extends State<MessageInput> {
           },
           style: Theme.of(context).textTheme.bodyText2,
           autofocus: false,
-          decoration: InputDecoration(
+          decoration: widget.messageInputDecoration ?? InputDecoration(
             hintText: 'Write a message',
             prefixText: '   ',
             border: InputBorder.none,
@@ -840,7 +849,7 @@ class MessageInputState extends State<MessageInput> {
           onPressed: () {
             sendMessage();
           },
-          icon: Icon(
+          icon: widget.sendIcon ?? Icon(
             Icons.send,
             color: StreamChatTheme.of(context).accentColor,
           ),

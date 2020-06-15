@@ -4,16 +4,20 @@ import 'package:stream_chat_flutter/stream_chat_flutter.dart';
 /// Used to show the sending status of the message
 class SendingIndicator extends StatelessWidget {
   final Message message;
+  final Widget deliveredIndicatorBuilder;
+  final Widget pendingIndicatorBuilder;
 
   const SendingIndicator({
     Key key,
     this.message,
+    this.deliveredIndicatorBuilder,
+    this.pendingIndicatorBuilder,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     if (message.status == MessageSendingStatus.SENT || message.status == null) {
-      return CircleAvatar(
+      return deliveredIndicatorBuilder ?? CircleAvatar(
         radius: 4,
         backgroundColor: StreamChatTheme.of(context).accentColor,
         child: Icon(
@@ -25,7 +29,7 @@ class SendingIndicator extends StatelessWidget {
     }
     if (message.status == MessageSendingStatus.SENDING ||
         message.status == MessageSendingStatus.UPDATING) {
-      return CircleAvatar(
+      return pendingIndicatorBuilder ?? CircleAvatar(
         radius: 4,
         backgroundColor: Colors.grey,
         child: Icon(
