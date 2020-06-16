@@ -222,7 +222,7 @@ class StreamChatState extends State<StreamChat> with WidgetsBindingObserver {
       if (_disconnectTimer?.isActive == true) {
         _disconnectTimer.cancel();
       } else {
-        if (client.wsConnectionStatus.value == ConnectionStatus.disconnected) {
+        if (client.state.user != null && client.wsConnectionStatus.value == ConnectionStatus.disconnected) {
           NotificationService.handleIosMessageQueue(client);
           client.connect();
         }
