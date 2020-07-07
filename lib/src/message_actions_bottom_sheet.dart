@@ -169,6 +169,16 @@ class MessageActionsBottomSheet extends StatelessWidget {
                 ),
               ),
               Padding(
+                padding: EdgeInsets.symmetric(
+                  vertical: 16,
+                ),
+                child: Container(
+                  height: 0.5,
+                  width: double.infinity,
+                  color: Color(0xFF909090),
+                ),
+              ),
+              Padding(
                 padding: EdgeInsets.only(
                   bottom: MediaQuery.of(context).viewInsets.bottom,
                 ),
