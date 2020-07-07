@@ -97,6 +97,7 @@ class MessageInput extends StatefulWidget {
     this.messageInputDecoration,
     this.messageInputBackgroundColor,
     this.messageInputRadius,
+    this.messageInputTextStyle,
   }) : super(key: key);
 
   /// Message to edit
@@ -153,6 +154,9 @@ class MessageInput extends StatefulWidget {
 
   /// Customize message input radius
   final double messageInputRadius;
+
+  /// Customize message input text style
+  final TextStyle messageInputTextStyle;
 
   @override
   MessageInputState createState() => MessageInputState();
@@ -293,7 +297,7 @@ class MessageInputState extends State<MessageInput> {
               _typingStarted = true;
             });
           },
-          style: Theme.of(context).textTheme.bodyText2,
+          style: widget.messageInputTextStyle ?? Theme.of(context).textTheme.bodyText2,
           autofocus: false,
           decoration: widget.messageInputDecoration ?? InputDecoration(
             hintText: 'Write a message',
@@ -312,28 +316,30 @@ class MessageInputState extends State<MessageInput> {
         padding: EdgeInsets.all(2),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(widget.messageInputRadius ?? 10.0),
-          gradient: _getGradient(context),
+          color: widget.messageInputBackgroundColor
+              ?? StreamChatTheme.of(context).channelTheme.inputBackground,
+//          gradient: _getGradient(context),
         ),
-        child: Container(
-          decoration: BoxDecoration(
-            color: widget.messageInputBackgroundColor.withAlpha(255)
-                ?? StreamChatTheme.of(context).channelTheme.inputBackground.withAlpha(255),
-            borderRadius: BorderRadius.circular(widget.messageInputRadius ?? 10.0),
-          ),
-          child: Container(
-            decoration: BoxDecoration(
-              color: widget.messageInputBackgroundColor
-                  ?? StreamChatTheme.of(context).channelTheme.inputBackground,
-              borderRadius: BorderRadius.circular(widget.messageInputRadius ?? 10.0),
-              border: Border.all(
-                  color: _typingStarted
-                      ? Colors.transparent
-                      : Theme.of(context).brightness == Brightness.dark
-                          ? Colors.white.withOpacity(.2)
-                          : Colors.black.withOpacity(.2)),
-            ),
-          ),
-        ),
+//        child: Container(
+//          decoration: BoxDecoration(
+//            color: widget.messageInputBackgroundColor.withAlpha(255)
+//                ?? StreamChatTheme.of(context).channelTheme.inputBackground.withAlpha(255),
+//            borderRadius: BorderRadius.circular(widget.messageInputRadius ?? 10.0),
+//          ),
+//          child: Container(
+//            decoration: BoxDecoration(
+//              color: widget.messageInputBackgroundColor
+//                  ?? StreamChatTheme.of(context).channelTheme.inputBackground,
+//              borderRadius: BorderRadius.circular(widget.messageInputRadius ?? 10.0),
+//              border: Border.all(
+//                  color: _typingStarted
+//                      ? Colors.transparent
+//                      : Theme.of(context).brightness == Brightness.dark
+//                          ? Colors.white.withOpacity(.2)
+//                          : Colors.black.withOpacity(.2)),
+//            ),
+//          ),
+//        ),
       ),
     );
   }
