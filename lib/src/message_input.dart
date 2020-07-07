@@ -95,6 +95,8 @@ class MessageInput extends StatefulWidget {
     this.attachmentThumbnailBuilders,
     this.sendIcon,
     this.messageInputDecoration,
+    this.messageInputBackgroundColor,
+    this.messageInputRadius,
   }) : super(key: key);
 
   /// Message to edit
@@ -145,6 +147,12 @@ class MessageInput extends StatefulWidget {
 
   /// Customize message input textField decoration
   final InputDecoration messageInputDecoration;
+
+  /// Customize message input background color
+  final Color messageInputBackgroundColor;
+
+  /// Customize message input radius
+  final double messageInputRadius;
 
   @override
   MessageInputState createState() => MessageInputState();
@@ -303,21 +311,20 @@ class MessageInputState extends State<MessageInput> {
         width: MediaQuery.of(context).size.width,
         padding: EdgeInsets.all(2),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10.0),
+          borderRadius: BorderRadius.circular(widget.messageInputRadius ?? 10.0),
           gradient: _getGradient(context),
         ),
         child: Container(
           decoration: BoxDecoration(
-            color: StreamChatTheme.of(context)
-                .channelTheme
-                .inputBackground
-                .withAlpha(255),
-            borderRadius: BorderRadius.circular(10.0),
+            color: widget.messageInputBackgroundColor.withAlpha(255)
+                ?? StreamChatTheme.of(context).channelTheme.inputBackground.withAlpha(255),
+            borderRadius: BorderRadius.circular(widget.messageInputRadius ?? 10.0),
           ),
           child: Container(
             decoration: BoxDecoration(
-              color: StreamChatTheme.of(context).channelTheme.inputBackground,
-              borderRadius: BorderRadius.circular(10.0),
+              color: widget.messageInputBackgroundColor
+                  ?? StreamChatTheme.of(context).channelTheme.inputBackground,
+              borderRadius: BorderRadius.circular(widget.messageInputRadius ?? 10.0),
               border: Border.all(
                   color: _typingStarted
                       ? Colors.transparent
